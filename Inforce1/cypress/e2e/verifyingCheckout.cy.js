@@ -1,18 +1,10 @@
-describe('Veryfying the checkout', () => {
-    it('Should proceed to checkout', () => {
-      cy.visit('https://www.saucedemo.com/')
-      cy.get('[data-test="username"]').type("standard_user")
-      cy.get('[data-test="password"]').type("secret_sauce")
-      cy.get('[data-test="login-button"]').click()
-      cy.get('.title').should('contain','Products')
-      cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').click()
-      cy.get('[data-test="add-to-cart-sauce-labs-bike-light"]').click()
-      cy.get('.shopping_cart_badge').should('contain', '2')
-      cy.get('.shopping_cart_link').click()
-      cy.get('.shopping_cart_badge').should('contain' , '2')
-      cy.get('#item_4_title_link > .inventory_item_name').should('contain' , 'Sauce Labs Backpack')
-      cy.get('#item_0_title_link > .inventory_item_name').should('contain' , 'Sauce Labs Bike Light')
-      cy.get('[data-test="checkout"]').click()
+describe('Verifying the checkout', () => {
+    it('Should verify the checkout information', () => {
+      cy.AddProducts('standard_user', 'secret_sauce', '[data-test="add-to-cart-sauce-labs-backpack"]', '[data-test="add-to-cart-sauce-labs-bike-light"]');
+      cy.get('.shopping_cart_link').click();
+      cy.get('#item_4_title_link > .inventory_item_name').should('contain', 'Sauce Labs Backpack');
+      cy.get('#item_0_title_link > .inventory_item_name').should('contain', 'Sauce Labs Bike Light');
+      cy.get('[data-test="checkout"]').click();
       cy.get('[data-test="firstName"]').type('test')
       cy.get('[data-test="lastName"]').type('test')
       cy.get('[data-test="postalCode"]').type('test')
